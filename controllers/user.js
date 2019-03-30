@@ -29,13 +29,57 @@ exports.userLogin = (req, res, next) => {
     })(req, res, next);
 };
 
+exports.updateProfile = async (req, res, next) => {
+    try {
+        const userId = req.user.userId;
+        const user = await User.findOne({where: {id: userId}});
+        if (user) {
+            const new_user = {
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                phoneNumber: req.body.phoneNumber,
+                social1: req.body.social1,
+                social2: req.body.social2,
+                schoolDistrict: req.body.schoolDistrict,
+                roleAtDistrict: req.body.roleAtDistrict,
+                bio: req.body.bio,
+            };
+            const updated = await user.update(new_user);
+            if (updated) {
+                return res.status(200).json({
+                    message: 'User updated successfully'
+                });
+            } else {
+                return res.status(400).json({
+                    message: 'User failed to update'
+                })
+            }
+        } else {
+            return res.status(404).json({
+                message: 'User not found'
+            });
+        }
+    } catch(e) {
+        return res.status(500).json({
+            message: 'Server not available',
+            error: JSON.stringify(e)
+        })
+    }
+};
+
+
 exports.getUser = async (req, res, next) => {
     try {
         let userId = req.user.userId;
-
+        let exclude = ['createdAt', 'updatedAt', 'hash', 'password'];
+        if (req.params.id) {
+            userId = req.params.id;
+            exclude = ['createdAt', 'updatedAt', 'hash', 'password', 'phoneNumber'];
+        }
         const user = await User.findOne({
             where: {id: userId},
-            attributes: ['email']
+            attributes: {exclude}
         });
         if (user) {
             return res.status(200).json(user);
@@ -52,6 +96,31 @@ exports.getUser = async (req, res, next) => {
     }
 };
 
+exports.changePassword = async (req, res, next) => {
+
+};
+
+exports.updateUserInfo = async (req ,res, next) => {
+
+};
+
+exports.updateProfilePic = async (req, res, next) => {
+    try {
+        const image = req.file;
+        if (!image) {
+            return res.status(422).json({message: 'Image not a valid'});
+        }
+        const updated = await User.update({profilePic: image.path}, {where: {id: req.user.userId}});
+        if (updated) {
+            return res.status(200).json({message: 'Profile pic updated successfully', profilePic: image.path});
+        }
+        return res.status(400).json({message: 'Profile pic was not updated'});
+    } catch (e) {
+        return res.status(500).json({
+            message: 'Server not available',
+        })
+    }
+};
 
 function general_login(err, user, info, req, res, next) {
     if (err || !user) {
