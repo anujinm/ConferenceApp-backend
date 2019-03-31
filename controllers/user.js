@@ -39,13 +39,14 @@ exports.updateProfile = async (req, res, next) => {
                 lastName: req.body.lastName,
                 email: req.body.email,
                 phoneNumber: req.body.phoneNumber,
+                personalEmail: req.body.personalEmail,
                 social1: req.body.social1,
                 social2: req.body.social2,
                 schoolDistrict: req.body.schoolDistrict,
                 roleAtDistrict: req.body.roleAtDistrict,
                 bio: req.body.bio,
             };
-            const updated = await user.update(new_user);
+            const updated = await User.update(new_user, {where: {id: req.user.userId}});
             if (updated) {
                 return res.status(200).json({
                     message: 'User updated successfully'
@@ -97,10 +98,6 @@ exports.getUser = async (req, res, next) => {
 };
 
 exports.changePassword = async (req, res, next) => {
-
-};
-
-exports.updateUserInfo = async (req ,res, next) => {
 
 };
 

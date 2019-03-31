@@ -33,6 +33,9 @@ module.exports = {
       phoneNumber: {
         type: Sequelize.STRING(20)
       },
+      personalEmail: {
+        type: Sequelize.STRING(20)
+      },
       bio: {
         type: Sequelize.TEXT,
       },
