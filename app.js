@@ -51,7 +51,7 @@ app.use(passport.initialize());
 
 // Routes
 app.use('/api/user', usersRoutes);
-app.use('api/speaker', speakerRoutes);
+app.use('/api/speaker', speakerRoutes);
 
 console.log('Username:', process.env.CONF_MYSQL_USER);
 console.log('Database:', process.env.CONF_MYSQL_DATABASE);
