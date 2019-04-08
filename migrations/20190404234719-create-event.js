@@ -1,33 +1,41 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Speakers', {
+    return queryInterface.createTable('Events', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      eventId:{
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Events',
-          key: 'id'
-        }
-      },
-      speakerName: {
+      eventName: {
         type: Sequelize.STRING
       },
-      speakerTopic: {
+      eventTopic: {
         type: Sequelize.STRING
       },
-      speakerPicture: {
+      eventOrganizer: {
         type: Sequelize.STRING
       },
-      speakerBio: {
+      eventStartDate: {
+        type: Sequelize.DATE
+      },
+      eventEndDate: {
+        type: Sequelize.DATE
+      },
+      eventDescription: {
         type: Sequelize.STRING
       },
-      speakerSlides: {
+      eventAgenda: {
+        type: Sequelize.STRING
+      },
+      eventMap: {
+        type: Sequelize.STRING
+      },
+      eventPicture: {
+        type: Sequelize.STRING
+      },
+      eventAdditionalPicture: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -41,6 +49,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Speakers');
+    return queryInterface.dropTable('Events');
   }
 };

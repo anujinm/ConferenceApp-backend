@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const path_join = require('path').join;
 const usersRoutes = require('./routes/user');
 const speakerRoutes = require('./routes/speaker');
+const eventRoutes = require('./routes/events');
 const multer = require('multer');
 
 const passport = require('passport');
@@ -52,6 +53,7 @@ app.use(passport.initialize());
 // Routes
 app.use('/api/user', usersRoutes);
 app.use('/api/speaker', speakerRoutes);
+app.use('/api/event', eventRoutes);
 
 console.log('Username:', process.env.CONF_MYSQL_USER);
 console.log('Database:', process.env.CONF_MYSQL_DATABASE);

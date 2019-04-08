@@ -28,7 +28,6 @@ exports.userLogin = (req, res, next) => {
         }
     })(req, res, next);
 };
-
 exports.updateProfile = async (req, res, next) => {
     try {
         const userId = req.user.userId;

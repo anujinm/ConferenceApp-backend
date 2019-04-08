@@ -1,26 +1,30 @@
 //This is where the js API is written
 const db = require('../models');
-const Speaker = db.Speaker;
+const Event = db.Event;
 
-exports.createSpeaker = async (req, res, next) => {
+exports.createEvent = async (req, res, next) => {
     try {
-        const new_speaker = {
-            eventId: req.body.eventId,
-            speakerName: req.body.speakerName,
-            speakerTopic: req.body.speakerTopic,
-            speakerPicture: req.body.speakerPicture,
-            speakerBio: req.body.speakerBio,
-            speakerSlides: req.body.speakerSlides
+        const new_event = {
+            eventName: req.body.eventName,
+            eventTopic: req.body.eventTopic,
+            eventOrganizer: req.body.eventOrganizer,
+            eventStartDate: req.body.eventStartDate,
+            eventEndDate: req.body.eventEndDate,
+            eventDescription: req.body.eventDescription,
+            eventAgenda: req.body.eventAgenda,
+            eventMap: req.body.eventMap,
+            eventPicture: req.body.eventPicture,
+            eventAdditionalPicture: req.body.eventAdditionalPicture,
         };
-        await Speaker.create(new_speaker);
-        return  res.status(200).json({message: 'Speaker created'});
+        await Event.create(new_event);
+        return  res.status(200).json({message: 'Event created'});
     }  catch (e) {
         return res.status(500).json({message: 'Server error'});
     }
 };
 
 
-module.exports.getSpeaker = async (req, res, next) => {
+module.exports.getEvent = async (req, res, next) => {
     try {
         // let userId = req.user.userId;
         // let exclude = ['createdAt', 'updatedAt', 'hash', 'password'];
