@@ -7,6 +7,7 @@ const validationCheck = require('../middlewares/checkValidation');
 
 router.post('/speaker', speakerController.createSpeaker);
 router.get('/speaker/:id', speakerController.getSpeaker);
+router.get('/speakers/:id', speakerController.getAllSpeakers);
 
 module.exports = router;
 

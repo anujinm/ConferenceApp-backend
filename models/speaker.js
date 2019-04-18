@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
     speakerName: DataTypes.STRING,
     speakerTopic: DataTypes.STRING,
     speakerPicture: DataTypes.STRING,
-    speakerBio: DataTypes.STRING,
+    speakerBio: DataTypes.TEXT,
     speakerSlides: DataTypes.STRING
   }, {});
   Speaker.associate = function(models) {

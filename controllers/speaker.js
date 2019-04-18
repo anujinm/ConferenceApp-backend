@@ -22,25 +22,44 @@ exports.createSpeaker = async (req, res, next) => {
 
 module.exports.getSpeaker = async (req, res, next) => {
     try {
-        // let userId = req.user.userId;
-        // let exclude = ['createdAt', 'updatedAt', 'hash', 'password'];
-        // if (req.params.id) {
-        //     userId = req.params.id;
-        //     exclude = ['createdAt', 'updatedAt', 'hash', 'password', 'phoneNumber'];
-        // }
-        const  id = req.params.id;
+        let speakerId = '';
+        if (req.params.id) {
+            speakerId = req.params.id;
+        }
         const speaker = await Speaker.findOne({
-            where: {id},
-            include: [{
-                model: Speaker,
-                attributes: ['id', 'speakerName', 'speakerTopic', 'speakerBio', 'speakerPicture', 'speakerSlides']
-            }]
+            where: {id: speakerId}
         });
+
         if (speaker) {
-            return res.status(200).json(speaker);
+            return res.status(200).json({speaker});
         } else {
             return res.status(404).json({
-                message: 'Speaker not found'
+                message: 'speaker not found',
+            })
+        }
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            message: 'Server not available',
+        })
+    }
+};
+
+module.exports.getAllSpeakers = async (req, res, next) => {
+    try {
+        let eventId = '';
+        if (req.params.id) {
+            eventId = req.params.id;
+        }
+        const speaker = await Speaker.findAll({
+            where: {eventId: eventId}
+        });
+
+        if (speaker) {
+            return res.status(200).json({speaker});
+        } else {
+            return res.status(404).json({
+                message: 'speakers not found',
             })
         }
     } catch (e) {

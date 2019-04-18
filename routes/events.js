@@ -7,6 +7,7 @@ const validationCheck = require('../middlewares/checkValidation');
 
 router.post('/event', eventController.createEvent);
 router.get('/event/:id', eventController.getEvent);
+router.get('/attendees/:id', eventController.getAllAttendees);
 
 module.exports = router;
 

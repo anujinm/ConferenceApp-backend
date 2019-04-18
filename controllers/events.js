@@ -1,6 +1,7 @@
 //This is where the js API is written
 const db = require('../models');
 const Event = db.Event;
+const User = db.User;
 
 exports.createEvent = async (req, res, next) => {
     try {
@@ -23,28 +24,47 @@ exports.createEvent = async (req, res, next) => {
     }
 };
 
+exports.getAllAttendees = async (req, res, next) => {
+    try {
+        let eventId = '';
+        if (req.params.id) {
+            eventId = req.params.id;
+            exclude = ['createdAt', 'updatedAt', 'hash', 'password'];
+        }
+        const attendees = await User.findAll({
+            where: {eventId: eventId},
+            attributes: {exclude}
+        });
+        if (attendees) {
+            return res.status(200).json(attendees);
+        } else {
+            return res.status(404).json({
+                message: 'Attendees not found'
+            })
+        }
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            message: 'Server not available',
+        })
+    }
+};
 
 module.exports.getEvent = async (req, res, next) => {
     try {
-        // let userId = req.user.userId;
-        // let exclude = ['createdAt', 'updatedAt', 'hash', 'password'];
-        // if (req.params.id) {
-        //     userId = req.params.id;
-        //     exclude = ['createdAt', 'updatedAt', 'hash', 'password', 'phoneNumber'];
-        // }
-        const  id = req.params.id;
-        const speaker = await Speaker.findOne({
-            where: {id},
-            include: [{
-                model: Speaker,
-                attributes: ['id', 'speakerName', 'speakerTopic', 'speakerBio', 'speakerPicture', 'speakerSlides']
-            }]
+        let eventId = '';
+        if (req.params.id) {
+            eventId = req.params.id;
+        }
+        const event = await Event.findOne({
+            where: {id: eventId}
         });
-        if (speaker) {
-            return res.status(200).json(speaker);
+
+        if (event) {
+            return res.status(200).json({event});
         } else {
             return res.status(404).json({
-                message: 'Speaker not found'
+                message: 'event not found',
             })
         }
     } catch (e) {
