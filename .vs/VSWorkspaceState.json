@@ -1,10 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\controllers",
-    "\\migrations",
-    "\\routes"
+    "\\controllers"
   ],
-  "SelectedNode": "\\app.js",
+  "SelectedNode": "\\controllers",
   "PreviewInSolutionExplorer": false
 }
