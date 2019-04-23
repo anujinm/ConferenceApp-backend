@@ -4,10 +4,15 @@ const router = express.Router();
 const eventController = require('../controllers/events');
 const db = require('../models');
 const validationCheck = require('../middlewares/checkValidation');
+const checkAuth = require('../middlewares/checkAuth');
+const adminAuth = require('../middlewares/adminAuth');
 
 router.post('/event', eventController.createEvent);
 router.get('/event/:id', eventController.getEvent);
+router.get('/events', eventController.getAllEvents);
 router.get('/attendees/:id', eventController.getAllAttendees);
+router.put('/event/:id', checkAuth, adminAuth, eventController.updateEvent);
+router.delete('/event/:id',checkAuth, adminAuth, eventController.deleteEvent);
 
 module.exports = router;
 

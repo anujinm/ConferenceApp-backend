@@ -35,7 +35,7 @@ module.exports = {
       eventPicture: {
         type: Sequelize.STRING
       },
-      eventAdditionalPicture: {
+      eventLocation: {
         type: Sequelize.STRING
       },
       createdAt: {

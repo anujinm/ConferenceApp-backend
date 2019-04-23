@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
     eventAgenda: DataTypes.STRING,
     eventMap: DataTypes.STRING,
     eventPicture: DataTypes.STRING,
-    eventAdditionalPicture: DataTypes.STRING
+    eventLocation: DataTypes.STRING
   }, {});
   Event.associate = function(models) {
     Event.hasMany(models.Speaker);
