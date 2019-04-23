@@ -69,3 +69,22 @@ module.exports.getAllSpeakers = async (req, res, next) => {
         })
     }
 };
+
+module.exports.deleteSpeaker  = async (req, res, next) => {
+    try {
+        const id = +req.params.id;
+
+        const result = await Speaker.destroy({
+            where: {id}
+        });
+        console.log(result);
+        if (result > 0) {
+            return res.status(200).json({message: 'Speaker Deleted'});
+        } else {
+            return res.status(404).json({message: 'Speaker not found!'});
+        }
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({message: 'Server error' + req.params.id});
+    }
+};
