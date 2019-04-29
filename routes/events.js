@@ -12,6 +12,7 @@ router.get('/event/:id', eventController.getEvent);
 router.get('/events', eventController.getAllEvents);
 router.get('/attendees/:id', eventController.getAllAttendees);
 router.put('/event/:id', checkAuth, adminAuth, eventController.updateEvent);
+router.put('/eventPic', checkAuth, adminAuth, eventController.uploadEventPicture);
 router.delete('/event/:id',checkAuth, adminAuth, eventController.deleteEvent);
 
 module.exports = router;

@@ -15,7 +15,7 @@ exports.createEvent = async (req, res, next) => {
             eventDescription: req.body.eventDescription,
             eventAgenda: req.body.eventAgenda,
             eventMap: req.body.eventMap,
-            eventPicture: req.body.eventPicture,
+            eventPicture: 'pictures\\event\\' + req.body.eventPicture,
             eventLocation: req.body.eventLocation,
         };
         await Event.create(new_event);
@@ -111,7 +111,7 @@ module.exports.updateEvent = async (req, res, next) => {
                 eventDescription: req.body.eventDescription,
                 eventAgenda: req.body.eventAgenda,
                 eventMap: req.body.eventMap,
-                eventPicture: req.body.eventPicture,
+                eventPicture: 'pictures\\event\\' + req.body.eventPicture,
                 eventLocation: req.body.eventLocation
             };
             const updated = await Event.update(new_event,{where: {id: eventId}});
@@ -122,6 +122,36 @@ module.exports.updateEvent = async (req, res, next) => {
             } else {
                 return res.status(400).json({
                     message: 'Event failed to update'
+                })
+            }
+        }
+    } catch(e) {
+        return res.status(500).json({
+            message: 'Server not available',
+            error: JSON.stringify(e)
+        })
+    }
+};
+module.exports.uploadEventPicture = async (req, res, next) => {
+    try {
+        const eventId = req.params.id;
+        const image = req.file;
+        if (!image) {
+            return res.status(422).json({message: 'Image not a valid'});
+        }
+        else {
+            console.log(image, image.path);
+        }
+        const event = await Event.findOne({where: {id: eventId}});
+        if (event) {
+            const updated = await Event.update({eventPicture: image.path},{where: {id: eventId}});
+            if (updated) {
+                return res.status(200).json({
+                    message: 'Event Picture updated successfully' + image + image.path
+                });
+            } else {
+                return res.status(400).json({
+                    message: 'Event Picture failed to update'
                 })
             }
         }
@@ -143,10 +173,10 @@ module.exports.deleteEvent  = async (req, res, next) => {
           where: {eventId: id}
       });
       if (speakerResult > 0) {
-          console.log('Speaker deleted');
+          console.log('Event deleted');
           areSpeakersDeleted = true;
       } else {
-          console.log('speaker not found');
+          console.log('Event not found');
           areSpeakersDeleted = true;
       }
 
