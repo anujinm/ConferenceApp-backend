@@ -19,7 +19,6 @@ exports.createSpeaker = async (req, res, next) => {
     }
 };
 
-
 module.exports.getSpeaker = async (req, res, next) => {
     try {
         let speakerId = '';
@@ -70,6 +69,28 @@ module.exports.getAllSpeakers = async (req, res, next) => {
     }
 };
 
+module.exports.getAllSpeakersForAllEvents = async (req, res, next) => {
+    try {
+
+        const speaker = await Speaker.findAll({
+            where: {}
+        });
+
+        if (speaker) {
+            return res.status(200).json({speaker});
+        } else {
+            return res.status(404).json({
+                message: 'speakers not found',
+            })
+        }
+    } catch (e) {
+        console.log(e);
+        return res.status(500).json({
+            message: 'Server not available',
+        })
+    }
+};
+
 module.exports.deleteSpeaker  = async (req, res, next) => {
     try {
         const id = +req.params.id;
@@ -86,5 +107,15 @@ module.exports.deleteSpeaker  = async (req, res, next) => {
     } catch (e) {
         console.log(e);
         return res.status(500).json({message: 'Server error' + req.params.id});
+    }
+};
+
+module.exports.updateSpeaker = async (req, res, next) => {
+    try {
+    } catch(e) {
+        return res.status(500).json({
+            message: 'Server not available',
+            error: JSON.stringify(e)
+        })
     }
 };

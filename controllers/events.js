@@ -71,7 +71,6 @@ module.exports.getAllEvents = async (req, res, next) => {
     }
 };
 
-
 module.exports.getEvent = async (req, res, next) => {
     try {
         let eventId = '';
