@@ -1,9 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\config",
-    "\\controllers"
+    "\\models"
   ],
-  "SelectedNode": "\\config\\passport.js",
+  "SelectedNode": "\\models\\events.js",
   "PreviewInSolutionExplorer": false
 }
