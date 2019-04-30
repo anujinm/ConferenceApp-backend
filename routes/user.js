@@ -49,4 +49,5 @@ router.put('/profilePic', checkAuth, UserController.updateProfilePic);
 router.get('/profile/:id', checkAuth, UserController.getUser);
 router.get('/profile', checkAuth, UserController.getUser);
 router.put('/profile/event', checkAuth, UserController.unregisterFromEvent);
+router.put('/event/unregisterAll/:id', checkAuth, UserController.unregisterAllFromEvent);
 module.exports = router;

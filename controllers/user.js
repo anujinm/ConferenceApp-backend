@@ -142,6 +142,31 @@ exports.unregisterFromEvent = async (req, res, next) => {
       })
   }
 };
+
+exports.unregisterAllFromEvent = async (req, res, next) => {
+    try {
+        const eventId = req.params.id;
+        const users = await User.findAll({where: {eventId: eventId}});
+        if (users) {
+            const updated = await User.update({eventId: 0}, {where: {eventId: eventId}});
+            if (updated) {
+                return res.status(200).json({
+                    message: 'All Users successfully unregistered'
+                });
+            } else {
+                return res.status(400).json({
+                    message: 'Users failed to unregister'
+                })
+            }
+        }
+    } catch (e) {
+        return res.status(500).json({
+            message: 'Server not available',
+            error: JSON.stringify(e)
+        })
+    }
+};
+
 function general_login(err, user, info, req, res, next) {
     if (err || !user) {
         return res.status(404).json({message: info.message});
