@@ -29,10 +29,6 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
-<<<<<<< HEAD
-    "sequelize": "^5.2.7"
-=======
     "sequelize": "^5.2.9"
->>>>>>> 245fd18747cec98ec751b53320c823bb65030512
   }
 }
