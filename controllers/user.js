@@ -28,7 +28,6 @@ exports.userLogin = (req, res, next) => {
         }
     })(req, res, next);
 };
-
 exports.updateProfile = async (req, res, next) => {
     try {
         const userId = req.user.userId;
@@ -45,6 +44,7 @@ exports.updateProfile = async (req, res, next) => {
                 schoolDistrict: req.body.schoolDistrict,
                 roleAtDistrict: req.body.roleAtDistrict,
                 bio: req.body.bio,
+                eventId: req.body.eventId,
             };
             const updated = await User.update(new_user, {where: {id: req.user.userId}});
             if (updated) {
@@ -119,6 +119,54 @@ exports.updateProfilePic = async (req, res, next) => {
     }
 };
 
+exports.unregisterFromEvent = async (req, res, next) => {
+  try {
+      const userId = req.user.userId;
+      const user = await User.findOne({where: {id: userId}});
+      if (user) {
+          const updated = await User.update({eventId: 0}, {where: {id: req.user.userId}});
+          if (updated) {
+              return res.status(200).json({
+                  message: 'User successfully unregistered'
+              });
+          } else {
+              return res.status(400).json({
+                  message: 'User failed to unregister'
+              })
+          }
+      }
+  } catch (e) {
+      return res.status(500).json({
+          message: 'Server not available',
+          error: JSON.stringify(e)
+      })
+  }
+};
+
+exports.unregisterAllFromEvent = async (req, res, next) => {
+    try {
+        const eventId = req.params.id;
+        const users = await User.findAll({where: {eventId: eventId}});
+        if (users) {
+            const updated = await User.update({eventId: 0}, {where: {eventId: eventId}});
+            if (updated) {
+                return res.status(200).json({
+                    message: 'All Users successfully unregistered'
+                });
+            } else {
+                return res.status(400).json({
+                    message: 'Users failed to unregister'
+                })
+            }
+        }
+    } catch (e) {
+        return res.status(500).json({
+            message: 'Server not available',
+            error: JSON.stringify(e)
+        })
+    }
+};
+
 function general_login(err, user, info, req, res, next) {
     if (err || !user) {
         return res.status(404).json({message: info.message});
@@ -139,3 +187,4 @@ function general_login(err, user, info, req, res, next) {
         });
     })
 }
+

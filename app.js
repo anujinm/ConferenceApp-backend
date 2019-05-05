@@ -2,6 +2,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const path_join = require('path').join;
 const usersRoutes = require('./routes/user');
+const speakerRoutes = require('./routes/speaker');
+const eventRoutes = require('./routes/events');
 const multer = require('multer');
 
 const passport = require('passport');
@@ -26,7 +28,8 @@ const fileStorage = multer.diskStorage({
 
 const app = express();
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false}));
+app.use(bodyParser.urlencoded({ extended: false }));
+
 // parse application/json
 app.use(bodyParser.json());
 app.use(multer({storage: fileStorage, limits: {fileSize: 1024 * 1024 * 3}}).single('image'));
@@ -49,6 +52,8 @@ app.use(passport.initialize());
 
 // Routes
 app.use('/api/user', usersRoutes);
+app.use('/api/speaker', speakerRoutes);
+app.use('/api/event', eventRoutes);
 
 console.log('Username:', process.env.CONF_MYSQL_USER);
 console.log('Database:', process.env.CONF_MYSQL_DATABASE);
