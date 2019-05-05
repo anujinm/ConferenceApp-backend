@@ -195,11 +195,41 @@ module.exports.uploadEventPicture = async (req, res, next) => {
             const updated = await Event.update({eventPicture: image.path},{where: {id: eventId}});
             if (updated) {
                 return res.status(200).json({
-                    message: 'Event Picture updated successfully' + image + image.path
+                    message: 'Event Picture updated successfully'
                 });
             } else {
                 return res.status(400).json({
                     message: 'Event Picture failed to update'
+                })
+            }
+        }
+    } catch(e) {
+        return res.status(500).json({
+            message: 'Server not available',
+            error: JSON.stringify(e)
+        })
+    }
+};
+module.exports.uploadSpeakerPicture = async (req, res, next) => {
+    try {
+        const speakerId = req.params.id;
+        const image = req.file;
+        if (!image) {
+            return res.status(422).json({message: 'Image not a valid'});
+        }
+        else {
+            console.log(image, image.path);
+        }
+        const speaker = await Speaker.findOne({where: {id: speakerId}});
+        if (speaker) {
+            const updated = await Speaker.update({speakerPicture: image.path},{where: {id: speakerId}});
+            if (updated) {
+                return res.status(200).json({
+                    message: 'Speaker Picture updated successfully'
+                });
+            } else {
+                return res.status(400).json({
+                    message: 'Speaker Picture failed to update'
                 })
             }
         }

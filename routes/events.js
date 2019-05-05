@@ -15,6 +15,7 @@ router.put('/event/:id', checkAuth, adminAuth, eventController.updateEvent);
 router.put('/event/map/:id', checkAuth, adminAuth, eventController.updateEventMap);
 router.put('/event/agenda/:id', checkAuth, adminAuth, eventController.updateEventAgenda);
 router.put('/event/eventPic/:id', checkAuth, adminAuth, eventController.uploadEventPicture);
+router.put('/event/speakerPic/:id', checkAuth, adminAuth, eventController.uploadSpeakerPicture);
 router.delete('/event/:id',checkAuth, adminAuth, eventController.deleteEvent);
 module.exports = router;
 
