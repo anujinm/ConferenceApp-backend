@@ -108,9 +108,6 @@ module.exports.updateEvent = async (req, res, next) => {
                 eventStartDate: req.body.eventStartDate,
                 eventEndDate: req.body.eventEndDate,
                 eventDescription: req.body.eventDescription,
-                eventAgenda: req.body.eventAgenda,
-                eventMap: req.body.eventMap,
-                eventPicture: 'pictures\\event\\' + req.body.eventPicture,
                 eventLocation: req.body.eventLocation
             };
             const updated = await Event.update(new_event,{where: {id: eventId}});
@@ -121,6 +118,58 @@ module.exports.updateEvent = async (req, res, next) => {
             } else {
                 return res.status(400).json({
                     message: 'Event failed to update'
+                })
+            }
+        }
+    } catch(e) {
+        return res.status(500).json({
+            message: 'Server not available',
+            error: JSON.stringify(e)
+        })
+    }
+};
+module.exports.updateEventMap = async (req, res, next) => {
+    try {
+        const eventId = req.params.id;
+        const event = await Event.findOne({where: {id: eventId}});
+        if (event) {
+            const new_event = {
+                eventMap: req.body.eventMap
+            };
+            const updated = await Event.update(new_event,{where: {id: eventId}});
+            if (updated) {
+                return res.status(200).json({
+                    message: 'Event map updated successfully'
+                });
+            } else {
+                return res.status(400).json({
+                    message: 'Event map failed to update'
+                })
+            }
+        }
+    } catch(e) {
+        return res.status(500).json({
+            message: 'Server not available',
+            error: JSON.stringify(e)
+        })
+    }
+};
+module.exports.updateEventAgenda = async (req, res, next) => {
+    try {
+        const eventId = req.params.id;
+        const event = await Event.findOne({where: {id: eventId}});
+        if (event) {
+            const new_event = {
+                eventAgenda: req.body.eventAgenda
+            };
+            const updated = await Event.update(new_event,{where: {id: eventId}});
+            if (updated) {
+                return res.status(200).json({
+                    message: 'Event agenda updated successfully'
+                });
+            } else {
+                return res.status(400).json({
+                    message: 'Event agenda failed to update'
                 })
             }
         }

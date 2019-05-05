@@ -146,7 +146,7 @@ exports.unregisterFromEvent = async (req, res, next) => {
 exports.unregisterAllFromEvent = async (req, res, next) => {
     try {
         const eventId = req.params.id;
-        const users = await User.findAll({where: {eventId: eventId}});
+        const users = await User.findAll({where: {eventId: eventId}});c
         if (users) {
             const updated = await User.update({eventId: 0}, {where: {eventId: eventId}});
             if (updated) {
