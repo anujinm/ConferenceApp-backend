@@ -82,7 +82,7 @@ passport.use('login', new LocalStrategy(
 
 const opts = {
     jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-    secretOrKey: process.env.CONF_JWT_KEY
+    secretOrKey: "S7UYTBT8s5FCRZyUpiKh"
 };
 
 passport.use(new JwtStrategy(opts, async (jwt_payload, done) => {
