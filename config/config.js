@@ -19,7 +19,7 @@ module.exports = {
         username: "root",
         password: "teamConference",
         database: "conference_db",
-        host: "35.236.18.234"g,
+        host: "35.236.18.234",
         dialect: "mysql",
         operatorsAliases: false
     }
