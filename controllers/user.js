@@ -176,7 +176,7 @@ function general_login(err, user, info, req, res, next) {
         const body = {userId: user.userId || user.id, email: user.email, level: user.level};
         const token = jwt.sign(
             body,
-            process.env.CONF_JWT_KEY,
+            "S7UYTBT8s5FCRZyUpiKh",
             { expiresIn: '10d' }
         );
         return res.status(200).json({
