@@ -2,7 +2,7 @@ package-lock.json
 .idea
 nodemon.json
 .vscode
-
+/.env
 # Logs
 logs
 *.log
