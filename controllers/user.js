@@ -5,7 +5,7 @@ const User = db.User;
 const passport = require('passport');
 
 exports.createUser = (req, res, next) => {
-    passport.authenticate('signup', async (err, user, info) => {
+    passport.authenticate('signup', { session : false },async (err, user, info) => {
         try {
             if (err || !user) {
                 return res.status(404).json({message: info.message});
@@ -20,7 +20,7 @@ exports.createUser = (req, res, next) => {
 };
 
 exports.userLogin = (req, res, next) => {
-    passport.authenticate('login', async (err, user, info) => {
+    passport.authenticate('login',{ session : false }, async (err, user, info) => {
         try {
             return general_login(err, user, info, req, res, next);
         } catch (e) {
