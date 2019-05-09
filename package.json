@@ -10,7 +10,7 @@
   },
   "engines": {
     "node": "v10.15.3",
-    "npm": "v.6.9.0"
+    "npm": "v6.9.0"
   },
   "repository": {
     "type": "git",
