@@ -1,3 +1,5 @@
+import {env as process} from "nodemon";
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const path_join = require('path').join;
