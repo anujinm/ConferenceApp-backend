@@ -45,9 +45,6 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(express.static(path_join(__dirname, 'public')));
-app.use('/pictures', express.static(path_join(__dirname, 'results')));
-
 app.use(passport.initialize());
 
 // Routes

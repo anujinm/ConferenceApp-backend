@@ -9,6 +9,7 @@ router.post('/speaker', speakerController.createSpeaker);
 router.get('/speaker/:id', speakerController.getSpeaker);
 router.get('/speakers/:id', speakerController.getAllSpeakers);
 router.get('/speakers', speakerController.getAllSpeakersForAllEvents);
+router.put('/speaker/:id', speakerController.updateSpeakerInfo);
 router.delete('/speaker/:id', speakerController.deleteSpeaker);
 module.exports = router;
 

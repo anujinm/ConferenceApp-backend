@@ -1,9 +1,9 @@
 module.exports = {
     development: {
-        username: "root",
-        password: "teamConference",
-        database: "conference_db",
-        host: "35.236.18.234",
+        username: process.env.CONF_MYSQL_USER,
+        password: process.env.CONF_MYSQL_PASSWORD,
+        database: process.env.CONF_MYSQL_DATABASE,
+        host: process.env.CONF_MYSQL_HOST,
         dialect: "mysql",
         operatorsAliases: false
     },
@@ -16,10 +16,10 @@ module.exports = {
         operatorsAliases: false
     },
     production: {
-        username: "root",
-        password: "teamConference",
-        database: "conference_db",
-        host: "35.236.18.234",
+        username: process.env.CONF_MYSQL_USER,
+        password: process.env.CONF_MYSQL_PASSWORD,
+        database: process.env.CONF_MYSQL_DATABASE,
+        host: process.env.CONF_MYSQL_HOST,
         dialect: "mysql",
         operatorsAliases: false
     }

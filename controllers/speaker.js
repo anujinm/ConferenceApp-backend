@@ -110,8 +110,30 @@ module.exports.deleteSpeaker  = async (req, res, next) => {
     }
 };
 
-module.exports.updateSpeaker = async (req, res, next) => {
+module.exports.updateSpeakerInfo = async (req, res, next) => {
     try {
+        const speakerId = req.params.id;
+        const speaker = await Speaker.findOne({where: {id: speakerId}});
+        if (speaker) {
+            const new_speaker = {
+                eventId: req.body.eventId,
+                speakerName: req.body.speakerName,
+                speakerTopic: req.body.speakerTopic,
+                speakerBio: req.body.speakerBio,
+                speakerSlides: req.body.speakerSlides
+            };
+            const updated = await Speaker.update(new_speaker, {where: {id: speakerId}});
+            if (updated) {
+                return res.status(200).json({
+                    message: 'Speaker updated successfully'
+                });
+            } else {
+                return res.status(400).json({
+                    message: 'Speaker failed to update'
+                })
+            }
+        }
+
     } catch(e) {
         return res.status(500).json({
             message: 'Server not available',

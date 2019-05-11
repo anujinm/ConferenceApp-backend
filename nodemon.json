@@ -1,12 +1,11 @@
 {
   "env": {
     "CONF_JWT_KEY": "S7UYTBT8s5FCRZyUpiKh",
-    "CONF_MYSQL_USER": "root",
-    "CONF_PORT": 8081,
-    "CONF_MYSQL_PASSWORD": "teamConference",
-    "CONF_MYSQL_DATABASE": "conference_db",
-    "CONF_MYSQL_HOST": "35.236.18.234",
-    "NODE_ENV": "production",
-    "CONF_NODE_ENV": "production"
+    "CONF_MYSQL_USER": "amsamn_edinstitutes_admin",
+    "CONF_MYSQL_PASSWORD": "EdInstitutes2019",
+    "CONF_MYSQL_DATABASE": "amsamn_edinstitutes",
+    "CONF_MYSQL_HOST": "az1-ss16.a2hosting.com",
+    "NODE_ENV": "development",
+    "CONF_NODE_ENV": "development"
   }
 }
