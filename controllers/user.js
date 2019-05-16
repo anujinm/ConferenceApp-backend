@@ -69,7 +69,6 @@ exports.updateProfile = async (req, res, next) => {
     }
 };
 
-
 exports.getUser = async (req, res, next) => {
     try {
         let userId = req.user.userId;
@@ -98,7 +97,19 @@ exports.getUser = async (req, res, next) => {
 };
 
 exports.changePassword = async (req, res, next) => {
-
+    try {
+        const userId = req.user.userId;
+        const user = await User.findOne({where: {id: userId}});
+        if (user) {
+            if (user.password === '') {
+                //
+            }
+        }
+    } catch (e) {
+        return res.status(500).json({
+            message: 'Server not available',
+        })
+    }
 };
 
 exports.updateProfilePic = async (req, res, next) => {
@@ -117,6 +128,31 @@ exports.updateProfilePic = async (req, res, next) => {
             message: 'Server not available',
         })
     }
+};
+
+exports.registerForEvent = async (req, res, next) => {
+  try {
+      const userId = req.user.userId;
+      const eventId = req.params.id;
+      const user = await User.findOne({where: {id: userId}});
+      if (user) {
+          const updated = await User.update({eventId: eventId}, {where: {id: req.user.userId}});
+          if (updated) {
+              return res.status(200).json({
+                  message: 'User successfully registered'
+              });
+          } else {
+              return res.status(400).json({
+                  message: 'User failed to register'
+              })
+          }
+      }
+  } catch (e) {
+      return res.status(500).json({
+          message: 'Server not available',
+          error: JSON.stringify(e)
+      })
+  }
 };
 
 exports.unregisterFromEvent = async (req, res, next) => {
@@ -146,7 +182,7 @@ exports.unregisterFromEvent = async (req, res, next) => {
 exports.unregisterAllFromEvent = async (req, res, next) => {
     try {
         const eventId = req.params.id;
-        const users = await User.findAll({where: {eventId: eventId}});c
+        const users = await User.findAll({where: {eventId: eventId}});
         if (users) {
             const updated = await User.update({eventId: 0}, {where: {eventId: eventId}});
             if (updated) {

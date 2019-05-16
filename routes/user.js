@@ -46,8 +46,10 @@ router.post('/login',
 
 router.put('/profile', checkAuth, UserController.updateProfile);
 router.put('/profilePic', checkAuth, UserController.updateProfilePic);
+router.put('/profile/resetPassword', checkAuth, UserController.changePassword);
 router.get('/profile/:id', checkAuth, UserController.getUser);
 router.get('/profile', checkAuth, UserController.getUser);
 router.put('/profile/event', checkAuth, UserController.unregisterFromEvent);
+router.put('/profile/event/register/:id', checkAuth, UserController.registerForEvent);
 router.put('/event/unregisterAll/:id', checkAuth, UserController.unregisterAllFromEvent);
 module.exports = router;
