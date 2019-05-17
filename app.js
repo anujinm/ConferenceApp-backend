@@ -12,7 +12,7 @@ require('./config/passport');
 const fileStorage = multer.diskStorage({
     destination: (req, file, cb) => {
         const folder = req.url.split('/')[2];
-        cb(null, './pictures/' + folder + '/');
+        cb(null, path_join(__dirname, 'pictures', folder));
     },
     filename: (req, file, cb) => {
         cb(null, new Date().getTime() + '-' + file.originalname);

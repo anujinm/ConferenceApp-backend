@@ -1,8 +1,10 @@
 const jwt = require('jsonwebtoken');
 const db = require('../models');
 const User = db.User;
-
+const path = require('path');
 const passport = require('passport');
+const BCRYPT_ROUNDS = 10;
+const bcrypt = require('bcryptjs');
 
 exports.createUser = (req, res, next) => {
     passport.authenticate('signup', { session : false },async (err, user, info) => {
@@ -99,12 +101,20 @@ exports.getUser = async (req, res, next) => {
 exports.changePassword = async (req, res, next) => {
     try {
         const userId = req.user.userId;
+        const currentPassword = req.body.oldPassword;
+        const newPassword = req.body.newPassword;
         const user = await User.findOne({where: {id: userId}});
         if (user) {
-            if (user.password === '') {
-                //
+            const response = await bcrypt.compare(currentPassword, user.password);
+
+            if (response) {
+                const newHashedPassword = await bcrypt.hash(newPassword, BCRYPT_ROUNDS);
+                await user.update({password: newHashedPassword});
+                return res.status(200).json({message: 'Password updated!'})
             }
+            return res.status(200).json({message: 'Password did not match'});
         }
+        return res.status(200).json({message: 'User not found'});
     } catch (e) {
         return res.status(500).json({
             message: 'Server not available',
@@ -116,14 +126,18 @@ exports.updateProfilePic = async (req, res, next) => {
     try {
         const image = req.file;
         if (!image) {
-            return res.status(422).json({message: 'Image not a valid'});
+            return res.status(422).json({message: 'Image not valid'});
         }
-        const updated = await User.update({profilePic: image.path}, {where: {id: req.user.userId}});
+        const currentFolder = __dirname.split(path.sep).pop();
+        const imagePath = image.path.substring(__dirname.length - currentFolder.length);
+
+        const updated = await User.update({profilePic: imagePath}, {where: {id: req.user.userId}});
         if (updated) {
-            return res.status(200).json({message: 'Profile pic updated successfully', profilePic: image.path});
+            return res.status(200).json({message: 'Profile pic updated successfully', profilePic: imagePath});
         }
         return res.status(400).json({message: 'Profile pic was not updated'});
     } catch (e) {
+        console.log(e);
         return res.status(500).json({
             message: 'Server not available',
         })
